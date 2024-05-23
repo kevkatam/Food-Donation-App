@@ -3,6 +3,14 @@ from typing import Optional
 from pydantic import BaseModel
 from motor.motor_asyncio import AsyncIOMotorClient
 from bson.objectid import ObjectId
+from app.database import (
+    client,
+    database,
+    donor_collection,
+    recipient_collection,
+    donation_collection,
+    user_collection
+)
 
 app = FastAPI()
 
