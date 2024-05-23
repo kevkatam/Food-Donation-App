@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from bson.objectid import ObjectId
+from app.database import donor_collection
 """
 donor module
 """
@@ -22,3 +24,20 @@ class Donor(DonorBase):
     class Config:
         """ pydantic configuration for donor """
         from_attributes = True
+
+
+def donor_helper(donor) -> dict:
+    """ helper fuction to transform donor document to dictionary """
+    return {
+        "id": str(donor["_id"]),
+        "name": donor["name"],
+        "user_id": donor["user_id"],
+    }
+
+
+async def create_donor(donor: DonorCreate, user_id: str):
+    """ function that creates a new donor"""
+    donor_dict = donor.dict()
+    donor_dict['user_id'] = user_id
+    new_donor = await donor_collection.insert_one(donor_dict)
+    return donor_helper(await donor_collection.find_one({"_id": new_donor.inserted_id}))
