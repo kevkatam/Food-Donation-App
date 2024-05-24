@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.auth import get_password_hash
+from app.utils import get_password_hash
 from app.database import user_collection
 """
 user model
