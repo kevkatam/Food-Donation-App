@@ -29,6 +29,7 @@ class Recipient(BaseModel):
     age: int
     user_id: int
 
+
 class UpdateRecipient(BaseModel):
     name: Optional[str] = None
     age: Optional[int] = None
@@ -84,7 +85,7 @@ def update_recipient(recipient_id: int, recipient: Recipient):
 
     if recipient.id is not None:
         recipients[recipient_id]["id"] = recipient.id
-    
+
     recipients[recipient_id] = recipient
     return recipients[recipient_id]
     raise HTTPException(status_code=404, detail="Recipient not found")
@@ -96,4 +97,3 @@ def delete_recipient(recipient_id: int):
         return {"Error": "Recipient ID does not exist"}
     del recipients[recipient_id]
     return {"Message": "Recipient deleted successfully"}
-
