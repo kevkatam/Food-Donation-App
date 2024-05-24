@@ -27,7 +27,7 @@ recipients = {
 class Recipient(BaseModel):
     name: str
     age: int
-    id: int
+    user_id: int
 
 class UpdateRecipient(BaseModel):
     name: Optional[str] = None
@@ -45,7 +45,7 @@ def index():
 
 @app.get("/get-recipient/{recipient_id}")
 def get_recipient(recipient_id: int = Path(..., description="The ID of the recipient you want to view", gt=0)):
-    return recipients.get(recipient_id, {"Data": "Not Found"})
+    return recipients.get(recipient_id, {"Data": "Not Found", "Status Code": 404})
 
 
 """query parameters"""
@@ -57,6 +57,7 @@ def get_recipient(*, recipient_id: int, name: Optional[str] = None, test: int):
         if recipients[recipient_id]["name"] == name:
             return recipients[recipient_id]
     return {"Data": "Not Found"}
+    raise HTTPException(status_code=404, detail="Recipient not found")
 
 
 """request body"""
@@ -86,6 +87,7 @@ def update_recipient(recipient_id: int, recipient: Recipient):
     
     recipients[recipient_id] = recipient
     return recipients[recipient_id]
+    raise HTTPException(status_code=404, detail="Recipient not found")
 
 
 @app.delete("/delete-recipient/{recipient_id}")
