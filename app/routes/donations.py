@@ -1,12 +1,13 @@
-from user import app
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, APIRouter
 from typing import List
 from app.models.donation import Donation, DonationCreate, create_donation, get_donations, get_donation_by_id
-from app.auth import get_current_user
+from app.routes.auth import get_current_user
 from app.models.user import User
 
+router = APIRouter()
 
-@app.post("/donations/", response_model=Donation)
+
+@router.post("/donations/", response_model=Donation)
 async def create_donation_endpoint(donation: DonationCreate, current_user: User = Depends(get_current_user)):
     """ creates a new donation
     Args:
@@ -21,7 +22,7 @@ async def create_donation_endpoint(donation: DonationCreate, current_user: User 
     return {"id": donation_id, **donation.dict()}
 
 
-@app.get("/donations/", response_model=List[Donation])
+@router.get("/donations/", response_model=List[Donation])
 async def gett_donations(skip: int = 0, limit: int = 10):
     """ gets a list of donations with pagination
     Args:
@@ -34,7 +35,7 @@ async def gett_donations(skip: int = 0, limit: int = 10):
     return donations
 
 
-@app.get("/donations/{id}", response_model=Donation)
+@router.get("/donations/{id}", response_model=Donation)
 async def get_donation(id: str):
     """ gets a single donation by its ID
     Args:

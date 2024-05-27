@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
 
-app = FastAPI()
 
 donors = {
     1: {

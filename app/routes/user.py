@@ -1,14 +1,14 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
 from app.models.user import User, UserCreate, create_user, get_user_by_username
 from app.routes.auth import authenticate_user, create_access_token
 
 
-app = FastAPI()
+router = APIRouter()
 
 
-@app.post("/token", response_model=dict)
+@router.post("/token", response_model=dict)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     """ this endpoint allows users to login and receive an access token
     Request Body:
@@ -30,7 +30,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.post("/users/", response_model=User)
+@router.post("/users/", response_model=User)
 async def register_user(user: UserCreate):
     """ this endpoint allows new users to register
     Requets Body:
