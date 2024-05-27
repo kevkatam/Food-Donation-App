@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from bson.objectid import ObjectId
 from app.database import donor_collection
+from typing import Any
 """
 donor module
 """
@@ -26,7 +27,7 @@ class Donor(DonorBase):
         from_attributes = True
 
 
-def donor_helper(donor) -> dict:
+def donor_helper(donor: Any) -> dict:
     """ helper fuction to transform donor document to dictionary """
     return {
         "id": str(donor["_id"]),
@@ -35,7 +36,7 @@ def donor_helper(donor) -> dict:
     }
 
 
-async def create_donor(donor: DonorCreate, user_id: str):
+async def create_donor(donor: DonorCreate, user_id: str) -> dict:
     """ function that creates a new donor"""
     donor_dict = donor.dict()
     donor_dict['user_id'] = user_id

@@ -16,5 +16,6 @@ async def create_donor_endpoint(donor: DonorCreate, current_user: User = Depends
     Returns:
         dict: a dictionary containing created donor's details
     """
-    donor_id = await create_donor(donor, user_id=current_user["id"])
-    return {"id": donor_id, "name": donor.name, "user_id": current_user["id"]}
+    donor_data = await create_donor(donor, user_id=current_user["id"])
+    # return {"id": donor_id, "name": donor.name, "user_id": current_user["id"]}
+    return donor_data
