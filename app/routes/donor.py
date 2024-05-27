@@ -6,7 +6,7 @@ from app.models.user import User
 
 router = APIRouter()
 
-@router.post("/donor/", response_model=Donor)
+@router.post("/donors/", response_model=Donor)
 async def create_donor_endpoint(donor: DonorCreate, current_user: User = Depends(get_current_user)):
     """
     creates a new donor
