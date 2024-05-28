@@ -51,4 +51,3 @@ async def get_reviews_by_user_id(user_id: str):
     """ function that gets reviews by user id """
     reviews = await review_collection.find({"user_id": ObjectId(user_id)}).to_list(length=None)
     return [review_helper(review) for review in reviews]
-

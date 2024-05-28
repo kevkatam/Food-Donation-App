@@ -59,3 +59,21 @@ async def get_donation_by_id(id: str):
     donation = await donation_collection.find_one({"_id": ObjectId(id)})
     if donation:
         return donation_helper(donation)
+
+
+async def delete_donation(id: str):
+    """ function that deletes a donation by its id """
+    delete_result = await donation_collection.delete_one({"_id": ObjectId(id)})
+    return delete_result.deleted_count > 0
+
+
+async def update_donation(id: str, donation_data: DonationBase):
+    """ function that updates donation data """
+    updated_data = donation_data.dict(exclude_unset=True)
+    update_result = await donation_collection.update_one(
+        {"_id": ObjectId(id)},
+        {"$set":updated_data}
+    )
+    if update_result.modified_count > 0:
+        return await get_donation_by_id(id)
+    return None

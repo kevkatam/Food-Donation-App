@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from app.models.review import Review, ReviewCreate, create_review, get_reviews_by_user_id
+from app.models.reviews import Review, ReviewCreate, create_review, get_reviews_by_user_id
 from app.models.user import get_user_by_username
 
 router = APIRouter()
