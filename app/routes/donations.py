@@ -20,7 +20,7 @@ async def create_donation_endpoint(donation: DonationCreate, current_user: User 
     """
     donation_data = await create_donation(donation)
     return donation_data
-    #return {"id": donation_id, **donation.dict()}
+    """return {"id": donation_id, **donation.dict()}"""
 
 
 @router.get("/donations/", response_model=List[Donation])
@@ -53,6 +53,7 @@ async def get_donation(id: str):
 
 
 @router.put("/donations/{id}", response_model=Donation)
+<<<<<<< HEAD
 async def update_donation_endpoint(id: str, donation_data: DonationBase, current_user = Depends(get_current_user)):
     """ updates a donation by its ID
     Args:
@@ -96,4 +97,27 @@ async def delete_donation_endpoint(id: str, current_user: User = Depends(get_cur
     deleted = await delete_donation(id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Donation not found")
+=======
+async def update_donation(id: str, donation: DonationCreate):
+    """ updates a donation's information
+    Args:
+        id (str): The id of the donation to update
+        donation (DonationCreate): The updated donation data
+    Returns:
+        Donation: The updated donation data
+    """
+    donation_data = await update_donation(id, donation)
+    return donation_data
+
+
+@router.delete("/donations/{id}")
+async def delete_donation(id: str):
+    """ deletes a donation by its ID
+    Args:
+        id (str): The id of the donation to delete
+    Returns:
+        dict: a dictionary containing a message indicating the deletion
+    """
+    await delete_donation(id)
+>>>>>>> 6f50ca7d5b7cef77284cbbf795c85c9802d24644
     return {"message": "Donation deleted successfully"}
