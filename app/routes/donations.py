@@ -18,8 +18,9 @@ async def create_donation_endpoint(donation: DonationCreate, current_user: User 
         dict: A dictionary conating the created donation's details,
               and donation id
     """
-    donation_id = await create_donation(donation)
-    return {"id": donation_id, **donation.dict()}
+    donation_data = await create_donation(donation)
+    return donation_data
+    #return {"id": donation_id, **donation.dict()}
 
 
 @router.get("/donations/", response_model=List[Donation])

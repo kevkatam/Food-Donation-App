@@ -25,7 +25,7 @@ async def authenticate_user(username: str, password: str):
     returns the user if authentication is successful, otherwise returns false
     """
     user = await get_user_by_username(username)
-    if not user or not verify_Password(password, user["password"]):
+    if not user or not verify_password(password, user["password"]):
         return False
     return user
 
