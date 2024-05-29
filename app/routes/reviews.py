@@ -36,3 +36,24 @@ async def get_user_reviews(user_id: str):
     if not reviews:
         raise HTTPException(status_code=404, detail="No reviews found for this user")
     return reviews
+
+@router.put("/reviews/{review_id}", response_model=Review)
+async def update_review_endpoint(review_id: str, review: ReviewCreate):
+    """ this endpoint allows users to update a review
+    Path Parameter:
+        review_id: id of the review to be updated
+    Request Body:
+        title: updated title of the review
+        content: updated content of the review
+        rating: updated rating of the review
+        userId: id of the user updating the review
+    """
+    existing_review = await get_reviews_by_user_id(review.user_id)
+    if not existing_review:
+        raise HTTPException(status_code=404, detail="Review not found")
+
+    updated_review = await update_review(review_id, review)
+    if not updated_review:
+        raise HTTPException(status_code=500, detail="Failed to update review")
+
+    return updated_review

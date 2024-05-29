@@ -51,3 +51,15 @@ async def get_reviews_by_user_id(user_id: str):
     """ function that gets reviews by user id """
     reviews = await review_collection.find({"user_id": ObjectId(user_id)}).to_list(length=None)
     return [review_helper(review) for review in reviews]
+
+async def update_review(review_id: str, review_data: ReviewCreate) -> dict:
+    """ function that updates a review """
+    update_data = review_data.dict(by_alias=True, exclude_unset=True)
+    review = await review_collection.find_one({"_id": ObjectId(review_id)})
+
+    if not review:
+        return None
+
+    await review_collection.update_one({"_id": ObjectId(review_id)}, {"$set": update_data})
+    updated_review = await review_collection.find_one({"_id": ObjectId(review_id)})
+    return review_helper(updated_review)
