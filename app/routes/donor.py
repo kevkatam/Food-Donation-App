@@ -93,4 +93,3 @@ async def delete_donor_info(donor_id: str, current_user: User = Depends(get_curr
     if not deleted:
         raise HTTPException(status_code=404, detail="Donor not found")
     return {"message": "Donor deleted successfully"}
-

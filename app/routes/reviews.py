@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
+from typing import List
 from app.models.reviews import Review, ReviewCreate, create_review, get_reviews_by_user_id
 from app.models.user import get_user_by_username
 
@@ -25,7 +26,7 @@ async def register_review(review: ReviewCreate):
         "user_id": review.user_id
     }
 
-@router.get("/reviews/user/{user_id}", response_model=list[Review])
+@router.get("/reviews/user/{user_id}", response_model=List[Review])
 async def get_user_reviews(user_id: str):
     """ this endpoint allows users to fetch reviews by user id
     Path Parameter:

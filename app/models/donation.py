@@ -61,21 +61,6 @@ async def get_donation_by_id(id: str):
         return donation_helper(donation)
 
 
-<<<<<<< HEAD
-@router.put("/donations/{id}", response_model=Donation)
-async def update_donation(id: str, donation: DonationCreate):
-    """ updates a donation's information
-    Args:
-        id (str): The id of the donation to update
-        donation (DonationCreate): The updated donation data
-    Returns:
-        Donation: The updated donation data
-    """
-    donation_data = await update_donation(id, donation)
-    return donation_data
-
-
-@router.delete("/donations/{id}")
 async def delete_donation(id: str):
     """ deletes a donation by its ID
     Args:
@@ -85,7 +70,8 @@ async def delete_donation(id: str):
     """
     await delete_donation(id)
     return {"message": "Donation deleted successfully"}
-=======
+
+
 async def delete_donation(id: str):
     """ function that deletes a donation by its id """
     delete_result = await donation_collection.delete_one({"_id": ObjectId(id)})
@@ -102,4 +88,3 @@ async def update_donation(id: str, donation_data: DonationBase):
     if update_result.modified_count > 0:
         return await get_donation_by_id(id)
     return None
->>>>>>> refs/remotes/origin/main
