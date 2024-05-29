@@ -8,15 +8,17 @@ from app.utils import get_password_hash, verify_password
 import os
 
 
-# secret key and algorithm for JWT
-SECRET_KEY = os.getenv("SECRET_KEY", "secret") # environment variable for secret key, with default fallback
+"""secret key and algorithm for JWT"""
+SECRET_KEY = os.getenv("SECRET_KEY", "secret")
+"""environment variable for secret key, with default fallback"""
+
 ALGORITHM = "HS256" # algorithm for JWT
 ACCESS_TOKEN_EXPIRE_MINUTES = 30 # Token expiration time in mins
 
-# Initialize password context for hass=hing and verifying passwords
+"""Initialize password context for hass=hing and verifying passwords"""
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-#OAuth2PasswordBearer instance to get token from request
+"""OAuth2PasswordBearer instance to get token from request"""
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 async def authenticate_user(username: str, password: str):
