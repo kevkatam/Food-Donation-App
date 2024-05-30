@@ -20,5 +20,6 @@ async def create_recipient_endpoint(recipient: RecipientCreate, current_user: Us
     Raises:
         HTTPException: if there is an error in recipient creation
     """
-    recipient_id = await create_recipient(recipient, user_id=current_user["id"])
-    return {"id": recipient_id, "name": recipient.name, "user_id": current_user["id"]}
+    recipient = await create_recipient(recipient, user_id=current_user["id"])
+
+    return {"id": recipient.get("id"), "name": recipient.get("name"), "user_id": current_user["id"]}
