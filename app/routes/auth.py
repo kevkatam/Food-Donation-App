@@ -12,14 +12,15 @@ import os
 SECRET_KEY = os.getenv("SECRET_KEY", "secret")
 """environment variable for secret key, with default fallback"""
 
-ALGORITHM = "HS256" # algorithm for JWT
-ACCESS_TOKEN_EXPIRE_MINUTES = 30 # Token expiration time in mins
+ALGORITHM = "HS256" """ algorithm for JWT"""
+ACCESS_TOKEN_EXPIRE_MINUTES = 30 """ Token expiration time in mins"""
 
 """Initialize password context for hass=hing and verifying passwords"""
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 """OAuth2PasswordBearer instance to get token from request"""
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 async def authenticate_user(username: str, password: str):
     """
@@ -62,4 +63,4 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     user = await get_user_by_username(username)
     if user is None:
         raise credentials_exception
-    return user 
+    return user
