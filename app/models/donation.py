@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from bson.objectid import ObjectId
 from app.database import donation_collection
+
 """
 donation module
 """
@@ -50,26 +51,14 @@ async def create_donation(donation: DonationCreate):
 async def get_donations(skip: int = 0, limit: int = 10):
     """ function that gets a list of donations """
     donations = await donation_collection.find().skip(skip).limit(limit).to_list(length=limit)
-
     return [donation_helper(donation) for donation in donations]
 
 
 async def get_donation_by_id(id: str):
-    """ function that gets donation by it's id """
+    """ function that gets donation by its id """
     donation = await donation_collection.find_one({"_id": ObjectId(id)})
     if donation:
         return donation_helper(donation)
-
-
-async def delete_donation(id: str):
-    """ deletes a donation by its ID
-    Args:
-        id (str): The id of the donation to delete
-    Returns:
-        dict: a dictionary containing a message indicating the deletion
-    """
-    await delete_donation(id)
-    return {"message": "Donation deleted successfully"}
 
 
 async def delete_donation(id: str):
@@ -83,7 +72,7 @@ async def update_donation(id: str, donation_data: DonationBase):
     updated_data = donation_data.dict(exclude_unset=True)
     update_result = await donation_collection.update_one(
         {"_id": ObjectId(id)},
-        {"$set":updated_data}
+        {"$set": updated_data}
     )
     if update_result.modified_count > 0:
         return await get_donation_by_id(id)
