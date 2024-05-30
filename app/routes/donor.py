@@ -6,6 +6,7 @@ from app.models.user import User
 
 router = APIRouter()
 
+
 @router.post("/donors/", response_model=Donor)
 async def create_donor_endpoint(donor: DonorCreate, current_user: User = Depends(get_current_user)):
     """
@@ -18,6 +19,7 @@ async def create_donor_endpoint(donor: DonorCreate, current_user: User = Depends
     """
     donor_data = await create_donor(donor, user_id=current_user["id"])
     return donor_data
+
 
 @router.get("/donors/{donor_id}", response_model=Donor)
 async def get_donor(donor_id: str, current_user: User = Depends(get_current_user)):
@@ -36,6 +38,7 @@ async def get_donor(donor_id: str, current_user: User = Depends(get_current_user
         raise HTTPException(status_code=403, detail="Not authorized to access this donor")
     return donor
 
+
 @router.get("/donors/user/{user_id}", response_model=List[Donor])
 async def get_donors_by_user(user_id: str, current_user: User = Depends(get_current_user)):
     """
@@ -52,6 +55,7 @@ async def get_donors_by_user(user_id: str, current_user: User = Depends(get_curr
     if not donors:
         raise HTTPException(status_code=404, detail="No donors found for this user")
     return donors
+
 
 @router.put("/donors/{donor_id}", response_model=Donor)
 async def update_donor_info(donor_id: str, donor: DonorUpdate, current_user: User = Depends(get_current_user)):
@@ -73,6 +77,7 @@ async def update_donor_info(donor_id: str, donor: DonorUpdate, current_user: Use
     if not updated_donor:
         raise HTTPException(status_code=404, detail="Donor not found")
     return updated_donor
+
 
 @router.delete("/donors/{donor_id}", response_model=dict)
 async def delete_donor_info(donor_id: str, current_user: User = Depends(get_current_user)):
