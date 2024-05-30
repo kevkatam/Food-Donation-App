@@ -12,8 +12,8 @@ import os
 SECRET_KEY = os.getenv("SECRET_KEY", "secret")
 """environment variable for secret key, with default fallback"""
 
-ALGORITHM = "HS256" """ algorithm for JWT"""
-ACCESS_TOKEN_EXPIRE_MINUTES = 30 """ Token expiration time in mins"""
+ALGORITHM = "HS256" # algorithm for JWT
+ACCESS_TOKEN_EXPIRE_MINUTES = 300 # Token expiration time in mins
 
 """Initialize password context for hass=hing and verifying passwords"""
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
