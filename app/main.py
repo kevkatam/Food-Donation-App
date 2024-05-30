@@ -3,7 +3,7 @@ from app.routes import donations, user, donor, recipient, reviews
 
 app = FastAPI()
 
-# routes from other modules
+""" routes from other modules"""
 app.include_router(user.router)
 app.include_router(donor.router)
 app.include_router(donations.router)
