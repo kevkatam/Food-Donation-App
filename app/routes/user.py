@@ -40,5 +40,6 @@ async def register_user(user: UserCreate):
     db_user = await get_user_by_username(user.username)
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registeared")
-    user_id = await create_user(user)
+    user_dict = await create_user(user)
+    user_id = user_dict.get("id")
     return {"id": user_id, "username": user.username}
