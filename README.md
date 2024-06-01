@@ -18,6 +18,12 @@ The Food Donation API is designed to facilitate the management of food donations
 - **JWT**: For secure authentication.
 - **Pydantic**: For data validation.
 
+## Key Features
+
+- **Asynchronous Operations**: The use of asynchronous operations (async/await) for handling I/O-bound tasks (e.g., database operations) to improve performance and scalability.
+- **Dependency Injection**: FastAPI's dependency injection system is used for injecting dependencies like get_current_user.
+- **Modular Design**: The code is modular, with separate functions for creating, retrieving, updating, and deleting donations. This improves maintainability and readability.
+
 ## Installation
 ### Prerequisites
 - Python 3.8+
