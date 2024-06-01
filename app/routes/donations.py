@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException, APIRouter
 from typing import List
-from app.models.donation import Donation, DonationBase, DonationCreate, create_donation, get_donations, get_donation_by_id, delete_donation, update_donation
+from app.models.donation import Donation, DonationBase, DonationCreate, create_donation, get_donations, get_donation_by_id, delete_donation, update_donation, get_donations_by_donor
 from app.routes.auth import get_current_user
 from app.models.user import User
 
@@ -79,7 +79,7 @@ async def get_donations_by_donor(donor_id: str, skip: int = 0, limit: int = 10):
     Return:
         List[Donation]: a list of donations made by the specified donor
     """
-    donations = await get_donations_by_donor_id(donor_id, skip=skip, limit=limit)
+    donations = await get_donations_by_donor(donor_id, skip=skip, limit=limit)
     if not donations:
         raise HTTPException(status_code=404, detail="No donations found for this donor")
     return donations
