@@ -79,7 +79,7 @@ async def update_donation(id: str, donation_data: DonationBase):
     return None
 
 
-async def get_donations_by_donor(donor_id: str, skip: int = 0, limit: int = 10):
+async def get_donations_by_donor_id(donor_id: str, skip: int = 0, limit: int = 10):
     """ function that gets a list of donations by donor id """
     donations = await donation_collection.find({"donor_id": donor_id}).skip(skip).limit(limit).to_list(length=limit)
     return [donation_helper(donation) for donation in donations]

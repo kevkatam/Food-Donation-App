@@ -69,7 +69,7 @@ async def update_donor(donor_id: str, donor_data: DonorUpdate) -> dict:
     donor = await donor_collection.find_one({"_id": ObjectId(donor_id)})
     if donor:
         await donor_collection.update_one({"_id": ObjectId(donor_id)}, {"$set": donor_data.dict()})
-        return await donor_collection.find_one({"_id": ObjectId(donor_id)})
+        return await get_donor_by_id(donor_id)
     return None
 
 
